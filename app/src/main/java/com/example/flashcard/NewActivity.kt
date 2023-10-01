@@ -2,6 +2,7 @@ package com.example.flashcard
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText;
 import android.widget.LinearLayout
@@ -17,11 +18,11 @@ class NewActivity : AppCompatActivity() {
     private lateinit var problemTextView: TextView
     private lateinit var nextButton: Button
     private lateinit var generateButton: Button
+    private lateinit var answerField: EditText
 
     private val problems = mutableListOf<String>()
     private var currentProblemIndex = 0
     private var score = 0
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.new_acitivity)
@@ -33,6 +34,8 @@ class NewActivity : AppCompatActivity() {
         problemTextView = findViewById(R.id.problem)
         nextButton = findViewById(R.id.next)
         generateButton = findViewById(R.id.generate)
+        answerField = findViewById(R.id.answer)
+
 
         generateProblems()
         nextButton.isEnabled = false
@@ -46,12 +49,18 @@ class NewActivity : AppCompatActivity() {
 
 
         nextButton.setOnClickListener {
+            val userAnswerText = answerField.text.toString()
+            val userAnswerInt = userAnswerText.toInt()
+            if (checkAnswer(userAnswerInt)) {
+                score++
+            }
             if (currentProblemIndex < problems.size - 1) {
                 currentProblemIndex++
                 displayCurrentProblem()
-                // checkAnswer()
             } else {
                 problemTextView.text = "No more problems"
+                val scoreStr = "Score: $score out of 10"
+                Toast.makeText(this, scoreStr, Toast.LENGTH_SHORT).show()
 
             }
         }
@@ -76,28 +85,28 @@ class NewActivity : AppCompatActivity() {
     }
 
 
-    private fun checkAnswer(userAnswer: Int) {
+
+    private fun checkAnswer(userAnswer: Int): Boolean {
         val current = problems[currentProblemIndex]
         var parts = current.split(" ")
         if (parts.size == 3) {
-            val operand1 = parts[0].toDouble()
+            val operand1 = parts[0].toInt()
             val operator = parts[1]
-            val operand2 = parts[2].toDouble()
+            val operand2 = parts[2].toInt()
 
             val correctAnswer = when (operator) {
                 "+" -> operand1 + operand2
                 "-" -> operand1 - operand2
-                else -> Double.NaN // Handle invalid operator gracefully
+                else -> null
             }
 
-            val userAnswerVal = userAnswer.toDouble()
+            val userAnswerVal = userAnswer.toInt()
             if (userAnswerVal == correctAnswer) {
-                score++
+                return true
             }
-
-            "Score: $score"
-
+            return false
         }
+        return false
     }
 }
 
