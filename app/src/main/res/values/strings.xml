@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Flashcard</string>
+    <string name = "name"> user </string>
 </resources>
