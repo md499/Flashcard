@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast;
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import org.w3c.dom.Text
 import kotlin.random.Random;
@@ -19,54 +20,101 @@ class NewActivity : AppCompatActivity() {
     private lateinit var nextButton: Button
     private lateinit var generateButton: Button
     private lateinit var answerField: EditText
+    private lateinit var playButton: Button
+
 
     private val problems = mutableListOf<String>()
     private var currentProblemIndex = 0
     private var score = 0
+
+    private lateinit var viewModel: FlashcardViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.new_acitivity)
 
+        viewModel = ViewModelProvider(this).get(FlashcardViewModel::class.java)
 
-        val op2 = findViewById<TextView>(R.id.ops) as TextView
+
         val size = 10
 
         problemTextView = findViewById(R.id.problem)
         nextButton = findViewById(R.id.next)
         generateButton = findViewById(R.id.generate)
         answerField = findViewById(R.id.answer)
+        playButton = findViewById(R.id.repeat)
 
+        val quitButton = findViewById<Button>(R.id.quit) as Button
+
+        currentProblemIndex = viewModel.currentProblemIndex
+        score = viewModel.score
 
         generateProblems()
         nextButton.isEnabled = false
+        playButton.isEnabled = false
+        quitButton.isEnabled = false
 
 
         generateButton.setOnClickListener {
             displayCurrentProblem()
             generateButton.isEnabled = false
+            playButton.isEnabled = false
             nextButton.isEnabled = true
         }
 
 
         nextButton.setOnClickListener {
             val userAnswerText = answerField.text.toString()
+
+            //check if user presses next on blank output...
+           // if (userAnswerText == " ") {
+           //     val msg ="Please enter your answer!"
+                //   Toast.makeText(this,msg, Toast.LENGTH_SHORT).show()
+           // }
+
             val userAnswerInt = userAnswerText.toInt()
             if (checkAnswer(userAnswerInt)) {
                 score++
             }
+
             if (currentProblemIndex < problems.size - 1) {
                 currentProblemIndex++
                 displayCurrentProblem()
+                answerField.text.clear()
+
             } else {
-                problemTextView.text = "No more problems"
+                //problemTextView.text = "No more problems"
                 val scoreStr = "Score: $score out of 10"
                 Toast.makeText(this, scoreStr, Toast.LENGTH_SHORT).show()
+                //generateButton.isEnabled = true
+                answerField.text.clear()
+                playButton.isEnabled = true
+                nextButton.isEnabled = false
+                quitButton.isEnabled = true
 
             }
         }
+
+        playButton.setOnClickListener {
+            score = 0
+            currentProblemIndex = 0
+            generateButton.isEnabled = true
+            problems.clear()
+            generateProblems()
+            nextButton.isEnabled = false
+            quitButton.isEnabled = true
+           // playButton.isEnabled = false
+            //displayCurrentProblem()
+
+        }
+
+        quitButton.setOnClickListener {
+            finish()
+        }
     }
 
-    private fun generateProblems() {
+
+            private fun generateProblems() {
         // Generate 10 problems and add them to the list
         for (i in 1..10) {
             val random1 = (1..99).random()
@@ -80,11 +128,13 @@ class NewActivity : AppCompatActivity() {
     }
 
     private fun displayCurrentProblem() {
-        val currentProblem = problems[currentProblemIndex]
-        problemTextView.text = "Problem ${currentProblemIndex + 1}: $currentProblem"
+        if (currentProblemIndex < problems.size) {
+            val currentProblem = problems[currentProblemIndex]
+            problemTextView.text = "Problem ${currentProblemIndex + 1}: $currentProblem"
+            // Update the problem text in the ViewModel
+            viewModel.currentProblemText = currentProblem
+        }
     }
-
-
 
     private fun checkAnswer(userAnswer: Int): Boolean {
         val current = problems[currentProblemIndex]
@@ -108,10 +158,5 @@ class NewActivity : AppCompatActivity() {
         }
         return false
     }
+
 }
-
-
-
-
-
-

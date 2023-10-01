@@ -42,7 +42,8 @@
             android:text="Generate 10 Random Numbers!"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="250dp"
+            android:layout_marginTop="150dp"
+            android:layout_marginLeft="5dp"
             />
 
     </LinearLayout>
@@ -53,22 +54,15 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/ops"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:gravity="center"
-            app:autoSizeTextType="uniform"
-            app:autoSizeMinTextSize="12dp"
-            app:autoSizeMaxTextSize="80dp"
-            />
+
         <TextView
             android:id="@+id/problem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:gravity="center"
+            android:layout_marginTop="150dp"
+            android:layout_marginLeft="5dp"
             app:autoSizeTextType="uniform"
             app:autoSizeMinTextSize="12dp"
             app:autoSizeMaxTextSize="80dp"
@@ -94,7 +88,7 @@
             app:autoSizeTextType="uniform"
             app:autoSizeMinTextSize="12dp"
             app:autoSizeMaxTextSize="80dp"
-            android:inputType="number"
+            android:inputType="numberSigned"
             />
 
 
@@ -105,8 +99,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/quit"
+            android:text="Quit"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="200dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/repeat"
+            android:text="Play Again!"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="200dp" />
 
         <Button
             android:layout_width="wrap_content"
@@ -115,10 +127,11 @@
             android:text="Next"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="400dp" />
+            android:layout_marginTop="200dp" />
+
+
 
 
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
