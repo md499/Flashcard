@@ -17,9 +17,11 @@ class NewActivity : AppCompatActivity() {
     private lateinit var problemTextView: TextView
     private lateinit var nextButton: Button
     private lateinit var generateButton: Button
+
     private val problems = mutableListOf<String>()
     private var currentProblemIndex = 0
     private var score = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.new_acitivity)
