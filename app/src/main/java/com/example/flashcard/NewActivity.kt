@@ -1,5 +1,6 @@
 package com.example.flashcard
 
+import FlashcardViewModel
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -34,7 +35,10 @@ class NewActivity : AppCompatActivity() {
         setContentView(R.layout.new_acitivity)
 
         viewModel = ViewModelProvider(this).get(FlashcardViewModel::class.java)
-
+        // Retrieve the current problem text and index from the ViewModel
+        val currentProblemText = viewModel.currentProblemText
+        currentProblemIndex = viewModel.currentProblemIndex
+        score = viewModel.score
 
         val size = 10
 
