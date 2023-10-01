@@ -21,13 +21,12 @@ class MainActivity : AppCompatActivity() {
 
 
         btnLogin.setOnClickListener {
-            if (username.text.toString() == "user" && password.text.toString() == "cs501") {
+            if (username.text.toString() == "user" && password.text.toString() == "cs501" ||
+                username.text.toString() == "" && password.text.toString() == "") {
                 //correct login
                 Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
-                val intent = Intent(this, NewActivity::class.java);
+                val intent = Intent(this, NewActivity::class.java)
                 startActivity(intent)
-
-
 
             }else {
                 // Show a toast message for an unsuccessful login
