@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 class NewActivity : AppCompatActivity() {
 
     private lateinit var problemTextView: TextView
+    private lateinit var nameText: TextView
     private lateinit var nextButton: Button
     private lateinit var generateButton: Button
     private lateinit var answerField: EditText
@@ -43,6 +44,8 @@ class NewActivity : AppCompatActivity() {
         generateButton = findViewById(R.id.generate)
         answerField = findViewById(R.id.answer)
         playButton = findViewById(R.id.repeat)
+        nameText = findViewById(R.id.nameText)
+        nameText.text = intent.getStringExtra("username")
 
         val quitButton = findViewById<Button>(R.id.quit) as Button
 

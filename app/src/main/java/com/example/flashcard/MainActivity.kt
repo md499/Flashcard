@@ -26,9 +26,10 @@ class MainActivity : AppCompatActivity() {
                 //correct login
                 Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
                 val intent = Intent(this, NewActivity::class.java)
+                intent.putExtra("username", username.text.toString())
                 startActivity(intent)
 
-            }else {
+            } else {
                 // Show a toast message for an unsuccessful login
                 Toast.makeText(this, "Login Failed. Please check your credentials.", Toast.LENGTH_SHORT).show();
             }
