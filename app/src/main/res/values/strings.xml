@@ -2,4 +2,5 @@
     <string name="app_name">Flashcard</string>
     <string name = "welcome">Welcome, </string>
     <string name = "answerhint">Enter Answer Here </string>
+    <string name="generate">Generate 10 Random Numbers!</string>
 </resources>
