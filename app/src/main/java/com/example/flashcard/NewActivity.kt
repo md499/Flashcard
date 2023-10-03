@@ -1,23 +1,20 @@
 package com.example.flashcard
 
 import FlashcardViewModel
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import android.widget.EditText;
-import android.widget.LinearLayout
+import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast;
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.snackbar.Snackbar
-import org.w3c.dom.Text
-import kotlin.random.Random;
 
 
 class NewActivity : AppCompatActivity() {
 
     private lateinit var problemTextView: TextView
+    private lateinit var nameText: TextView
     private lateinit var nextButton: Button
     private lateinit var generateButton: Button
     private lateinit var answerField: EditText
@@ -47,6 +44,8 @@ class NewActivity : AppCompatActivity() {
         generateButton = findViewById(R.id.generate)
         answerField = findViewById(R.id.answer)
         playButton = findViewById(R.id.repeat)
+        nameText = findViewById(R.id.nameText)
+        nameText.text = intent.getStringExtra("username")
 
         val quitButton = findViewById<Button>(R.id.quit) as Button
 
@@ -69,34 +68,38 @@ class NewActivity : AppCompatActivity() {
 
         nextButton.setOnClickListener {
             val userAnswerText = answerField.text.toString()
+            Log.d("UserAnswerText", "User Answer Text: $userAnswerText")
 
             //check if user presses next on blank output...
-           // if (userAnswerText == " ") {
-           //     val msg ="Please enter your answer!"
-                //   Toast.makeText(this,msg, Toast.LENGTH_SHORT).show()
-           // }
+           if (userAnswerText.isEmpty()) {
+               val msg ="Please enter your answer!"
+                Toast.makeText(this,msg, Toast.LENGTH_SHORT).show()
+           }
 
-            val userAnswerInt = userAnswerText.toInt()
-            if (checkAnswer(userAnswerInt)) {
-                score++
-            }
+            else{
+               val userAnswerInt = userAnswerText.toInt()
+               if (checkAnswer(userAnswerInt)) {
+                   score++
+               }
 
-            if (currentProblemIndex < problems.size - 1) {
-                currentProblemIndex++
-                displayCurrentProblem()
-                answerField.text.clear()
+               if (currentProblemIndex < problems.size - 1) {
+                   currentProblemIndex++
+                   displayCurrentProblem()
+                   answerField.text.clear()
 
-            } else {
-                //problemTextView.text = "No more problems"
-                val scoreStr = "Score: $score out of 10"
-                Toast.makeText(this, scoreStr, Toast.LENGTH_SHORT).show()
-                //generateButton.isEnabled = true
-                answerField.text.clear()
-                playButton.isEnabled = true
-                nextButton.isEnabled = false
-                quitButton.isEnabled = true
+               } else {
+                   //problemTextView.text = "No more problems"
+                   val scoreStr = "Score: $score out of 10"
+                   Toast.makeText(this, scoreStr, Toast.LENGTH_SHORT).show()
+                   //generateButton.isEnabled = true
+                   answerField.text.clear()
+                   playButton.isEnabled = true
+                   nextButton.isEnabled = false
+                   quitButton.isEnabled = true
 
-            }
+               }
+
+           }
         }
 
         playButton.setOnClickListener {
