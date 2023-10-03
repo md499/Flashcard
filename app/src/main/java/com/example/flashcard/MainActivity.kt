@@ -1,11 +1,11 @@
 package com.example.flashcard
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
-import android.widget.EditText;
-import android.widget.Toast;
-import android.content.Intent;
+import android.widget.EditText
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,8 +21,7 @@ class MainActivity : AppCompatActivity() {
 
 
         btnLogin.setOnClickListener {
-            if (username.text.toString() == "user" && password.text.toString() == "cs501" ||
-                username.text.toString() == "" && password.text.toString() == "") {
+            if (username.text.toString() == "user" && password.text.toString() == "cs501") {
                 //correct login
                 Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
                 val intent = Intent(this, NewActivity::class.java)
